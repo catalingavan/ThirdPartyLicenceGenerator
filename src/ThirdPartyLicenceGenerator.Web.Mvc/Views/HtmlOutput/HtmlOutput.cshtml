@@ -1,0 +1,19 @@
+﻿@model ThirdPartyLicenceGenerator.Web.Mvc.Models.ParseResultViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Html output</title>
+</head>
+<body>
+    @foreach (var item in Model.Files)
+    {
+        Html.RenderPartial("~/Views/HtmlOutput/_PackageFileResult.cshtml", item);
+    }
+</body>
+</html>

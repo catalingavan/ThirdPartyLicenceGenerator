@@ -1,0 +1,53 @@
+﻿@using ThirdPartyLicenceGenerator;
+@using ThirdPartyLicenceGenerator.Models
+@model PackagesFileResult<IPackage>
+    
+<h2>@Model.FileName</h2>
+
+<table style="width: 100%; table-layout: fixed;">
+    <thead>
+        <tr>
+            <th style="text-align: left;">Package</th>
+            <th style="text-align: left;">Source</th>
+            <th style="text-align: left;">Licence</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (IPackage item in Model.Packages)
+    {
+        <tr>
+            <td>
+                @if (item.ProjectPath.IsAbsoluteUrl())
+                {
+                    <a href="@item.ProjectPath" target="_blank">@item.PackageId</a>
+                }
+                else
+                {
+                    @item.PackageId    
+                }
+            </td>
+            <td>
+                @if (item.SourcePath.IsAbsoluteUrl())
+                {
+                    <a href="@item.SourcePath" target="_blank">@item.SourcePath.ToSubPaths(2)</a>
+                }
+                else
+                {
+                    @item.SourcePath.ToSubPaths(2)
+                }
+            </td>
+            <td>
+                @if (item.LicencePath.IsAbsoluteUrl())
+                {
+                    <a href="@item.LicencePath" target="_blank">@item.LicencePath.ToSubPaths(2)</a>
+                }
+                else
+                {
+                    @item.LicencePath.ToSubPaths(2)
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
