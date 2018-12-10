@@ -80,7 +80,12 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc
                 heading = $"### {package.PackageId}";
             }
 
-            heading = $"{heading} ({package.LicencePath.ToSubPaths(1)})";
+            string licenceText =
+                package.LicencePath.IsAbsoluteUrl() ?
+                    $"([{package.LicencePath.ToSubPaths(1)}]({package.LicencePath}))" :
+                    $"({package.LicencePath.ToSubPaths(1)})";
+
+            heading = $"{heading} {licenceText}";
 
             StringBuilder sb = new StringBuilder();
 
