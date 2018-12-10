@@ -113,6 +113,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\HtmlOutput\_PackageFileResult.cshtml" />
     <Content Include="Views\HtmlOutput\HtmlOutput.cshtml" />
+    <Content Include="Views\MarkdownOutput\_PackageFileResult.cshtml" />
+    <Content Include="Views\MarkdownOutput\MarkdownOutput.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

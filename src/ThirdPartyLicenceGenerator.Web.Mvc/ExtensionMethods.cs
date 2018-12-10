@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ThirdPartyLicenceGenerator.Models;
 
 namespace ThirdPartyLicenceGenerator.Web.Mvc
@@ -35,19 +36,6 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc
             return value.Contains("\\");
         }
 
-        public static string ToLicenceText(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return value;
-
-            if (IsAbsoluteUrl(value))
-            {
-                return value.Split(new string[] {"/"}, StringSplitOptions.RemoveEmptyEntries).Last();
-            }
-
-            return value;
-        }
-
         public static string ToSubPaths(this string value, int take)
         {
             if (string.IsNullOrEmpty(value))
@@ -73,6 +61,36 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc
             var subpaths = paths.Skip(paths.Count - take).Take(take);
 
             return string.Join("/", subpaths);
+        }
+
+        public static string ToMarkdownHeading(this IPackage package)
+        {
+            string projectUrl =
+                package.ProjectPath.IsAbsoluteUrl() ? package.ProjectPath :
+                package.SourcePath.IsAbsoluteUrl() ? package.SourcePath : null;
+
+            string heading = null;
+
+            if(!string.IsNullOrEmpty(projectUrl))
+            {
+                heading = $"### [{package.PackageId}]({projectUrl})";
+            }
+            else
+            {
+                heading = $"### {package.PackageId}";
+            }
+
+            heading = $"{heading} ({package.LicencePath.ToSubPaths(1)})";
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(heading);
+            sb.AppendLine("Here goes the License text");
+
+            sb.AppendLine();
+            sb.AppendLine();
+
+            return sb.ToString();
         }
     }
 }

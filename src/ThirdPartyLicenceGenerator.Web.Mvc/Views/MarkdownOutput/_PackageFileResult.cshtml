@@ -1,0 +1,8 @@
+﻿@using ThirdPartyLicenceGenerator;
+@using ThirdPartyLicenceGenerator.Models
+@model PackagesFileResult<IPackage>
+
+@foreach (IPackage item in Model.Packages)
+{
+    @item.ToMarkdownHeading()
+}

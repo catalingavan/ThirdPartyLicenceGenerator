@@ -16,6 +16,7 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly string _outputView;
         private readonly INuGetPackageRepository _nuGetPackagesRepository;
         private readonly IUiLibraryPackageRepository _uiLibraryPackageRepository;
         public HomeController()
@@ -29,6 +30,8 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc.Controllers
                 new NpmUiLibraryPackageRepository(),
                 new InMemoryCacheManager()
             );
+
+            _outputView = "~/Views/MarkdownOutput/MarkdownOutput.cshtml";
         }
 
         public ActionResult Index()
@@ -53,7 +56,7 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc.Controllers
             var builder = new ParseResultViewModelBuilder();
             var viewModel = builder.Build(new[] {result});
 
-            return View("~/Views/HtmlOutput/HtmlOutput.cshtml", viewModel);
+            return View(_outputView, viewModel);
         }
 
         [HttpPost]
@@ -66,7 +69,7 @@ namespace ThirdPartyLicenceGenerator.Web.Mvc.Controllers
             var builder = new ParseResultViewModelBuilder();
             var viewModel = builder.Build(result);
 
-            return View("~/Views/HtmlOutput/HtmlOutput.cshtml", viewModel);
+            return View(_outputView, viewModel);
         }
     }
 }
